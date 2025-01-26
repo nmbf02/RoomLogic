@@ -27,12 +27,7 @@ public class ReservationsActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.rvReservations);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Inicialización del adaptador con la lista de reservas y el contexto
-        reservationAdapter = new ReservationAdapter(reservationList, this);
-        recyclerView.setAdapter(reservationAdapter);
 
-        // Cargar las reservas
-        fetchReservations();
     }
 
     // Método para obtener las reservas del repositorio

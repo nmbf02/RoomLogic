@@ -1,79 +1,64 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.dashboardactivity">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <!-- Título de la actividad -->
     <TextView
         android:id="@+id/tvDashboardTitle"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
         android:text="Clientes con reservas al día de hoy"
-        android:textAlignment="center"
         android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="@android:color/black" />
 
-    <!-- Lista de reservas -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvReservations"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/tvDashboardTitle"
-        app:layout_constraintBottom_toTopOf="@id/layoutButtons"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp" />
+        android:layout_weight="1"
+        android:background="@android:color/white" />
 
-    <!-- Contenedor para los botones -->
+    <!-- Contenedor horizontal para los botones -->
     <LinearLayout
-        android:id="@+id/layoutButtons"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:padding="16dp">
+        android:layout_marginTop="16dp">
 
         <Button
             android:id="@+id/btnRegister"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Registrar"
-            android:textSize="11sp" />
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnConsult"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Consultar"
-            android:textSize="10sp" />
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnReport"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Reporte"
-            android:textSize="11sp" />
+            android:text="Generar Reporte"
+            android:layout_marginEnd="8dp"
+            android:textColor="@android:color/white" />
 
         <Button
             android:id="@+id/btnImages"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="Imágenes"
-            android:textSize="10sp" />
+            android:textColor="@android:color/white" />
     </LinearLayout>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

@@ -4,60 +4,57 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.roomlogic.R;
 import com.example.roomlogic.model.Reservation;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ViewHolder> {
+public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder> {
 
-    private List<Reservation> reservationList;
-
-    public ReservationAdapter(List<Reservation> reservationList) {
-        this.reservationList = reservationList;
-    }
-
-    public void updateList(List<Reservation> newReservations) {
-        this.reservationList = newReservations;
-        notifyDataSetChanged(); // Notifica al RecyclerView sobre los cambios
-    }
+    private List<Reservation> reservations = new ArrayList<>();
 
     @NonNull
     @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public ReservationViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_reservation, parent, false); // Asegúrate de que el layout XML sea correcto
-        return new ViewHolder(view);
+                .inflate(R.layout.item_reservation, parent, false);
+        return new ReservationViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Reservation reservation = reservationList.get(position);
-
-        // Configura los datos en las vistas
-        holder.tvGuestName.setText(reservation.getGuestName());
-        holder.tvPhone.setText(reservation.getPhone());
-        holder.tvRoomNumber.setText(String.valueOf(reservation.getRoomNumber()));
-        holder.tvStatus.setText(reservation.getStatus());
+    public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
+        Reservation reservation = reservations.get(position);
+        holder.tvGuestNameValue.setText(reservation.getGuestName());
+        holder.tvPhoneValue.setText(reservation.getPhone());
+        holder.tvRoomNumberValue.setText(String.valueOf(reservation.getRoomNumber()));
+        holder.tvStatusValue.setText(reservation.getStatus());
     }
 
     @Override
     public int getItemCount() {
-        return reservationList != null ? reservationList.size() : 0;
+        return reservations.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        TextView tvGuestName, tvPhone, tvRoomNumber, tvStatus;
+    public void submitList(List<Reservation> newReservations) {
+        reservations.clear();
+        reservations.addAll(newReservations);
+        notifyDataSetChanged();
+    }
 
-        public ViewHolder(@NonNull View itemView) {
+    static class ReservationViewHolder extends RecyclerView.ViewHolder {
+        TextView tvGuestNameValue, tvPhoneValue, tvRoomNumberValue, tvStatusValue;
+
+        public ReservationViewHolder(@NonNull View itemView) {
             super(itemView);
-
-            // Vincula las vistas con los IDs en el layout XML
-            tvGuestName = itemView.findViewById(R.id.tvGuestNameValue);
-            tvPhone = itemView.findViewById(R.id.tvPhoneValue);
-            tvRoomNumber = itemView.findViewById(R.id.tvRoomNumberValue);
-            tvStatus = itemView.findViewById(R.id.tvStatusValue);
+            tvGuestNameValue = itemView.findViewById(R.id.tvGuestNameValue);
+            tvPhoneValue = itemView.findViewById(R.id.tvPhoneValue);
+            tvRoomNumberValue = itemView.findViewById(R.id.tvRoomNumberValue);
+            tvStatusValue = itemView.findViewById(R.id.tvStatusValue);
         }
     }
 }
