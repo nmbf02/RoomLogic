@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">RoomLogic</string>
+    <string name="prompt_type">Tipo de Habitación</string>
+    <string name="prompt_status">Estado</string>
+    <string name="filter_type">Tipo de Habitación</string>
+    <string name="filter_status">Estado</string>
+</resources>

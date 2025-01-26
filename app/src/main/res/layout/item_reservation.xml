@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="12dp"
+    android:background="@color/white"
+    android:elevation="2dp"
+    android:layout_margin="8dp">
+
+    <!-- Nombre del cliente -->
+    <TextView
+        android:id="@+id/tvGuestNameValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/black" />
+
+    <!-- Teléfono del cliente -->
+    <TextView
+        android:id="@+id/tvPhoneValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Teléfono"
+        android:textSize="14sp"
+        android:textColor="@color/gray" />
+
+    <!-- Número de habitación -->
+    <TextView
+        android:id="@+id/tvRoomNumberValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Habitación"
+        android:textSize="14sp"
+        android:textColor="@color/gray" />
+
+    <!-- Estado de la reserva -->
+    <TextView
+        android:id="@+id/tvStatusValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="14sp"
+        android:textColor="@color/gray" />
+
+</LinearLayout>
