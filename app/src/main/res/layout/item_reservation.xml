@@ -1,34 +1,48 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:padding="16dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    app:cardElevation="4dp"
+    app:cardCornerRadius="8dp">
 
-    <TextView
-        android:id="@+id/tvGuestNameValue"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Nombre del cliente"
-        android:textSize="16sp" />
+        android:orientation="vertical"
+        android:padding="16dp">
 
-    <TextView
-        android:id="@+id/tvPhoneValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Teléfono"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nombre"
+            android:textSize="18sp"
+            android:textColor="@android:color/black"
+            android:textStyle="bold" />
 
-    <TextView
-        android:id="@+id/tvRoomNumberValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Número de habitación"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/tvRoomType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Habitación"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray" />
 
-    <TextView
-        android:id="@+id/tvStatusValue"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Estado"
-        android:textSize="14sp" />
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Teléfono"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray" />
+
+        <TextView
+            android:id="@+id/tvRoomNumber"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Número de Habitación"
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

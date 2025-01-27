@@ -1,20 +1,24 @@
 package com.example.roomlogic.model;
 
 public class Reservation {
-    private String guestName;
+    private String name;
+    private String roomType;
     private String phone;
     private int roomNumber;
-    private String status;
 
-    public Reservation(String guestName, String phone, int roomNumber, String status) {
-        this.guestName = guestName;
+    public Reservation(String name, String roomType, String phone, int roomNumber) {
+        this.name = name;
+        this.roomType = roomType;
         this.phone = phone;
         this.roomNumber = roomNumber;
-        this.status = status;
     }
 
-    public String getGuestName() {
-        return guestName;
+    public String getName() {
+        return name;
+    }
+
+    public String getRoomType() {
+        return roomType;
     }
 
     public String getPhone() {
@@ -25,7 +29,14 @@ public class Reservation {
         return roomNumber;
     }
 
-    public String getStatus() {
-        return status;
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Reservation that = (Reservation) obj;
+        return roomNumber == that.roomNumber &&
+                name.equals(that.name) &&
+                roomType.equals(that.roomType) &&
+                phone.equals(that.phone);
     }
 }
