@@ -7,53 +7,34 @@
     android:layout_height="match_parent"
     tools:context=".view.loginactivity">
 
-    <!-- Título centrado en la parte superior -->
-
-    <!-- Campo de texto para el nombre de usuario -->
-
-    <!-- Campo de texto para la contraseña -->
-
-    <!-- Imagen centrada en la parte superior -->
     <ImageView
         android:id="@+id/imageView2"
         android:layout_width="139dp"
         android:layout_height="142dp"
-        app:srcCompat="@drawable/roomlogic"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="172dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="140dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/roomlogic" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etUsername"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="4dp"
-        android:hint="Contraseña"
-        android:inputType="textPassword"
+        android:layout_marginTop="36dp"
+        android:hint="Usuario"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etUsername"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintWidth_percent="0.8" />
-
-    <Button
-        android:id="@+id/btnLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
-        android:text="Iniciar sesión"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.489"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/etPassword" />
 
     <TextView
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="292dp"
+        android:layout_marginTop="324dp"
         android:text="Welcome back to RoomLogic"
         android:textColor="@color/black"
         android:textSize="24sp"
@@ -64,17 +45,29 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed" />
 
+    <Button
+        android:id="@+id/btnLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Iniciar sesión"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.489"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
     <EditText
-        android:id="@+id/etUsername"
+        android:id="@+id/etPassword"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
-        android:hint="Usuario"
+        android:layout_marginTop="12dp"
+        android:hint="Contraseña"
+        android:inputType="textPassword"
         android:padding="12dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.463"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintTop_toBottomOf="@id/etUsername"
         app:layout_constraintWidth_percent="0.8" />
 
     <!-- Botón para iniciar sesión -->

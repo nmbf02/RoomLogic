@@ -10,31 +10,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class dashboardviewmodel extends ViewModel {
-
     private final MutableLiveData<List<Reservation>> reservations = new MutableLiveData<>();
-    private final MutableLiveData<String> errorMessage = new MutableLiveData<>();
 
     public dashboardviewmodel() {
-        // Inicializa datos ficticios
-        loadDummyReservations();
+        // Datos ficticios
+        List<Reservation> dummyReservations = new ArrayList<>();
+        dummyReservations.add(new Reservation("John Doe", "Suite", "123456789", 101));
+        dummyReservations.add(new Reservation("Jane Smith", "Deluxe", "987654321", 102));
+        dummyReservations.add(new Reservation("Alice Johnson", "Standard", "456123789", 103));
+        dummyReservations.add(new Reservation("Bob Brown", "Suite", "789321456", 104));
+
+        reservations.setValue(dummyReservations);
     }
 
     public LiveData<List<Reservation>> getReservations() {
         return reservations;
-    }
-
-    public LiveData<String> getErrorMessage() {
-        return errorMessage;
-    }
-
-    public void loadDummyReservations() {
-        // Simula datos ficticios
-        List<Reservation> dummyReservations = new ArrayList<>();
-        dummyReservations.add(new Reservation("John Doe", "123456789", 101, "Activo"));
-        dummyReservations.add(new Reservation("Jane Smith", "987654321", 102, "Pendiente"));
-        dummyReservations.add(new Reservation("Alice Johnson", "456123789", 103, "Cancelado"));
-        dummyReservations.add(new Reservation("Bob Brown", "789321456", 104, "Activo"));
-
-        reservations.setValue(dummyReservations);
     }
 }

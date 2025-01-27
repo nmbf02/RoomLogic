@@ -30,14 +30,7 @@
         </activity>
 
         <!-- Declaración de otras actividades -->
-        <activity android:name=".view.ReportActivity" />
         <activity android:name=".view.ImagesActivity" />
-        <activity android:name=".view.RegisterActivity" />
-        <activity android:name=".view.ConsultActivity" />
         <activity android:name=".view.dashboardactivity" />
-        <activity android:name=".view.RoomsActivity" />
-        <activity android:name=".view.ClientsActivity" />
-        <activity android:name=".view.ReservationsActivity" />
-
     </application>
 </manifest>
