@@ -44,6 +44,13 @@ public class dashboardactivity extends AppCompatActivity {
             // Abrir la actividad ImagesActivity
             startActivity(new Intent(this, ImagesActivity.class));
         });
+
+        // Configurar el botón "Registrar"
+        findViewById(R.id.btnRegister).setOnClickListener(v -> {
+            // Abrir la actividad RegisterActivity
+            Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
 }
