@@ -32,5 +32,9 @@
         <!-- Declaración de otras actividades -->
         <activity android:name=".view.ImagesActivity" />
         <activity android:name=".view.dashboardactivity" />
+        <activity android:name=".view.RegisterClientActivity" />
+        <activity android:name=".view.RegisterRoomActivity" />
+        <activity android:name=".view.RegisterActivity" />
+
     </application>
 </manifest>
