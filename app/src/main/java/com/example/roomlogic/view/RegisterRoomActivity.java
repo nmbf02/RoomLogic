@@ -17,6 +17,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RegisterRoomActivity extends AppCompatActivity {
+
     private RoomApi roomApi;
 
     @Override
@@ -25,29 +26,25 @@ public class RegisterRoomActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register_room);
 
         // Inicializar Retrofit
-        roomApi = ApiClient.getClient().create(RoomApi.class);
+        roomApi = ApiClient.getRetrofitInstance().create(RoomApi.class);
 
         EditText etRoomNumber = findViewById(R.id.etRoomNumber);
         EditText etRoomType = findViewById(R.id.etRoomType);
-        EditText etRoomStatus = findViewById(R.id.etRoomStatus);
         Button btnSaveRoom = findViewById(R.id.btnSaveRoom);
 
         btnSaveRoom.setOnClickListener(v -> {
             String roomNumberStr = etRoomNumber.getText().toString().trim();
             String roomType = etRoomType.getText().toString().trim();
-            String roomStatus = etRoomStatus.getText().toString().trim();
 
-            if (roomNumberStr.isEmpty() || roomType.isEmpty() || roomStatus.isEmpty()) {
+            if (roomNumberStr.isEmpty() || roomType.isEmpty()) {
                 Toast.makeText(this, "Por favor, complete todos los campos", Toast.LENGTH_SHORT).show();
                 return;
             }
 
             int roomNumber = Integer.parseInt(roomNumberStr);
 
-            // Crear un objeto Room
-            Room room = new Room(roomNumber, roomType, roomStatus);
+            Room room = new Room(null, roomNumber, roomType, "Available");
 
-            // Enviar los datos a la API
             roomApi.addRoom(room).enqueue(new Callback<Void>() {
                 @Override
                 public void onResponse(Call<Void> call, Response<Void> response) {
@@ -58,9 +55,10 @@ public class RegisterRoomActivity extends AppCompatActivity {
                         Toast.makeText(RegisterRoomActivity.this, "Error al registrar la habitación", Toast.LENGTH_SHORT).show();
                     }
                 }
+
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(RegisterRoomActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegisterRoomActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         });
