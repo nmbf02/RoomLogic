@@ -40,7 +40,7 @@ public class RoomAdapter extends RecyclerView.Adapter<RoomAdapter.RoomViewHolder
     public void onBindViewHolder(@NonNull RoomViewHolder holder, int position) {
         Room room = roomList.get(position);
         holder.tvRoomNumber.setText("Habitación: " + room.getRoomNumber());
-        holder.tvRoomType.setText("Tipo: " + room.getType());
+        holder.tvRoomType.setText("Tipo: " + room.getRoomType());
         holder.tvRoomStatus.setText("Estado: " + room.getStatus());
 
         holder.btnEdit.setOnClickListener(v -> listener.onEdit(room));

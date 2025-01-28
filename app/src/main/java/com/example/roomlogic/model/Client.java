@@ -1,25 +1,29 @@
 package com.example.roomlogic.model;
 
 public class Client {
-    private int id;
+    private Integer id; // ID puede ser null
     private String name;
     private String email;
-    private String phone;
+    private String phone; // Cambiado de phone_number a phone
+    private String address;
+    private String status;
 
-    // Constructor
-    public Client(int id, String name, String email, String phone) {
+    // Constructor con todos los parámetros
+    public Client(Integer id, String name, String email, String phone, String address, String status) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.address = address;
+        this.status = status;
     }
 
-    // Getters y Setters
-    public int getId() {
+    // Getters y setters
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -40,10 +44,26 @@ public class Client {
     }
 
     public String getPhone() {
-        return phone;
+        return phone; // Cambiado a phone
     }
 
-    public void setPhone(String phone) {
+    public void setPhone(String phone) { // Cambiado a phone
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }
