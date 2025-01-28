@@ -12,6 +12,7 @@
         android:text="Registrar Habitación"
         android:textSize="20sp"
         android:gravity="center"
+        android:layout_marginTop="40dp"
         android:layout_marginBottom="16dp" />
 
     <EditText
