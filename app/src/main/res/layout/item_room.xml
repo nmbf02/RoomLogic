@@ -1,45 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="8dp"
     android:background="@android:color/white">
 
     <TextView
         android:id="@+id/tvRoomNumber"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Habitación" />
+        android:text="Habitación: "
+        android:textSize="16sp"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/tvRoomType"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Tipo" />
+        android:text="Tipo: "
+        android:textSize="14sp"/>
 
     <TextView
         android:id="@+id/tvRoomStatus"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Estado" />
+        android:text="Estado: "
+        android:textSize="14sp"/>
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="8dp">
+        android:gravity="end"
+        android:paddingTop="8dp">
 
         <Button
-            android:id="@+id/btnEdit"
+            android:id="@+id/btnEditRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Editar" />
+            android:text="Editar"
+            android:textSize="14sp"/>
 
         <Button
-            android:id="@+id/btnDelete"
+            android:id="@+id/btnDeleteRoom"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Eliminar"
-            android:layout_marginStart="8dp" />
+            android:textSize="14sp"/>
     </LinearLayout>
 </LinearLayout>

@@ -19,7 +19,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         findViewById(R.id.btnRegisterRoom).setOnClickListener(v -> {
             // Abrir la actividad para registrar una habitación
-            startActivity(new Intent(this, RegisterRoomActivity.class));
+            startActivity(new Intent(this, ManageRoomsActivity.class));
         });
     }
 }

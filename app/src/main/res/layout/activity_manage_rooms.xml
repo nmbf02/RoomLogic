@@ -2,28 +2,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@android:color/white">
 
-    <TextView
-        android:id="@+id/tvManageRoomsTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Gestión de Habitaciones"
-        android:textSize="20sp"
-        android:layout_marginBottom="16dp"
-        android:textStyle="bold" />
-
-    <!-- Botón para agregar una nueva habitación -->
     <Button
         android:id="@+id/btnAddRoom"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Agregar Habitación"
-        android:layout_marginBottom="16dp" />
+        android:text="Agregar Habitacion"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="38dp"/>
 
-    <!-- RecyclerView para listar las habitaciones -->
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvRooms"
+        android:id="@+id/recyclerViewRooms"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

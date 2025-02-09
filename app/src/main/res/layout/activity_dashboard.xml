@@ -33,7 +33,7 @@
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mantenimiento"
+            android:text="Mantenimientos"
             android:backgroundTint="@color/purple_200"
             android:textColor="@android:color/white"
             android:layout_margin="8dp" />
