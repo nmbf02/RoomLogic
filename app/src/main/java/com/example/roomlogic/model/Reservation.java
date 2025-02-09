@@ -1,42 +1,67 @@
 package com.example.roomlogic.model;
 
 public class Reservation {
-    private String name;
-    private String roomType;
-    private String phone;
-    private int roomNumber;
+    private Integer id;
+    private int guestId;
+    private int roomId;
+    private String checkInDate;
+    private String checkOutDate;
+    private String status;
 
-    public Reservation(String name, String roomType, String phone, int roomNumber) {
-        this.name = name;
-        this.roomType = roomType;
-        this.phone = phone;
-        this.roomNumber = roomNumber;
+    public Reservation(Integer id, int guestId, int roomId, String checkInDate, String checkOutDate, String status) {
+        this.id = id;
+        this.guestId = guestId;
+        this.roomId = roomId;
+        this.checkInDate = checkInDate;
+        this.checkOutDate = checkOutDate;
+        this.status = status;
     }
 
-    public String getName() {
-        return name;
+    public Integer getId() {
+        return id;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public int getGuestId() {
+        return guestId;
     }
 
-    public String getPhone() {
-        return phone;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public int getRoomNumber() {
-        return roomNumber;
+    public String getCheckInDate() {
+        return checkInDate;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj == null || getClass() != obj.getClass()) return false;
-        Reservation that = (Reservation) obj;
-        return roomNumber == that.roomNumber &&
-                name.equals(that.name) &&
-                roomType.equals(that.roomType) &&
-                phone.equals(that.phone);
+    public String getCheckOutDate() {
+        return checkOutDate;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public void setGuestId(int guestId) {
+        this.guestId = guestId;
+    }
+
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
+    }
+
+    public void setCheckInDate(String checkInDate) {
+        this.checkInDate = checkInDate;
+    }
+
+    public void setCheckOutDate(String checkOutDate) {
+        this.checkOutDate = checkOutDate;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

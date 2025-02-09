@@ -37,5 +37,6 @@
         <activity android:name=".view.RegisterActivity" />
         <activity android:name=".view.ManageClientsActivity"/>
         <activity android:name=".view.ManageRoomsActivity"/>
+        <activity android:name=".view.ManageReservationsActivity"/>
     </application>
 </manifest>
