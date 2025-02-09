@@ -40,12 +40,18 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public void onBindViewHolder(@NonNull ReservationViewHolder holder, int position) {
         Reservation reservation = reservationList.get(position);
+
+        holder.tvReservationId.setText("Reserva ID: " + (reservation.getId() != null ? reservation.getId() : "Sin ID"));
         holder.tvGuestId.setText("Guest ID: " + reservation.getGuestId());
         holder.tvRoomId.setText("Room ID: " + reservation.getRoomId());
-        holder.tvCheckInDate.setText("Check-In: " + reservation.getCheckInDate());
-        holder.tvCheckOutDate.setText("Check-Out: " + reservation.getCheckOutDate());
+        holder.tvCheckInDate.setText("Check-In: " + (reservation.getCheckInDate() != null ? reservation.getCheckInDate() : "No definido"));
+        holder.tvCheckOutDate.setText("Check-Out: " + (reservation.getCheckOutDate() != null ? reservation.getCheckOutDate() : "No definido"));
         holder.tvReservationStatus.setText("Status: " + reservation.getStatus());
 
+        holder.btnEdit.setOnClickListener(v -> {
+            // Aquí puedes implementar la funcionalidad para editar la reserva
+            Toast.makeText(context, "Editar reserva ID: " + reservation.getId(), Toast.LENGTH_SHORT).show();
+        });
 
         holder.btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
@@ -89,16 +95,18 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     }
 
     static class ReservationViewHolder extends RecyclerView.ViewHolder {
-        TextView tvGuestId, tvRoomId, tvCheckInDate, tvCheckOutDate, tvReservationStatus;
-        Button btnDelete;
+        TextView tvReservationId, tvGuestId, tvRoomId, tvCheckInDate, tvCheckOutDate, tvReservationStatus;
+        Button btnEdit, btnDelete;
 
         ReservationViewHolder(View itemView) {
             super(itemView);
+            tvReservationId = itemView.findViewById(R.id.tvReservationId); // ✅ Agregada la vista del ID
             tvGuestId = itemView.findViewById(R.id.tvGuestId);
             tvRoomId = itemView.findViewById(R.id.tvRoomId);
             tvCheckInDate = itemView.findViewById(R.id.tvCheckInDate);
             tvCheckOutDate = itemView.findViewById(R.id.tvCheckOutDate);
-            tvReservationStatus = itemView.findViewById(R.id.tvReservationStatus); // ✅ Nuevo ID aquí
+            tvReservationStatus = itemView.findViewById(R.id.tvReservationStatus);
+            btnEdit = itemView.findViewById(R.id.btnEditReservation); // ✅ Agregado botón de editar
             btnDelete = itemView.findViewById(R.id.btnDeleteReservation);
         }
     }

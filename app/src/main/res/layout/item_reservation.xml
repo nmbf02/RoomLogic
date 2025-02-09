@@ -10,7 +10,7 @@
         android:id="@+id/tvReservationId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Reserva ID: 101"
+        android:text="Reserva ID: "
         android:textSize="16sp"
         android:textStyle="bold"
         android:textColor="@android:color/black"/>
