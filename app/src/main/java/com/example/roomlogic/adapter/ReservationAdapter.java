@@ -44,7 +44,8 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         holder.tvRoomId.setText("Room ID: " + reservation.getRoomId());
         holder.tvCheckInDate.setText("Check-In: " + reservation.getCheckInDate());
         holder.tvCheckOutDate.setText("Check-Out: " + reservation.getCheckOutDate());
-        holder.tvReservationStatus.setText("Status: " + reservation.getStatus()); // ✅ Usando el nuevo ID
+        holder.tvReservationStatus.setText("Status: " + reservation.getStatus());
+
 
         holder.btnDelete.setOnClickListener(v -> {
             new AlertDialog.Builder(context)
@@ -59,6 +60,12 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
     @Override
     public int getItemCount() {
         return reservationList.size();
+    }
+
+    public void updateReservations(List<Reservation> newReservations) {
+        this.reservationList.clear();
+        this.reservationList.addAll(newReservations);
+        notifyDataSetChanged();
     }
 
     private void deleteReservation(Reservation reservation, int position) {

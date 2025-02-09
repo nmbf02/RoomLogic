@@ -32,4 +32,9 @@ public class ApiClient {
     public static RoomApi getRoomApi() {
         return getRetrofitInstance().create(RoomApi.class);
     }
+
+    // Métodos para obtener instancias de APIs específicas
+    public static ReservationApi getReservationApi() {
+        return getRetrofitInstance().create(ReservationApi.class);
+    }
 }

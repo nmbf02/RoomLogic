@@ -17,6 +17,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.util.Log;
+
 public class ManageReservationsActivity extends AppCompatActivity {
     private RecyclerView recyclerViewReservations;
     private ReservationAdapter reservationAdapter;
@@ -36,7 +38,12 @@ public class ManageReservationsActivity extends AppCompatActivity {
         // Botón para agregar una reserva
         Button btnAddReservation = findViewById(R.id.btnAddReservation);
         btnAddReservation.setOnClickListener(v -> {
-            ReservationFormDialog dialog = new ReservationFormDialog(this, null, this::loadReservations);
+            ReservationFormDialog dialog = new ReservationFormDialog(this, null, new ReservationFormDialog.OnReservationUpdatedListener() {
+                @Override
+                public void onReservationUpdated(Reservation updatedReservation) {
+                    loadReservations();
+                }
+            });
             dialog.show();
         });
 
@@ -53,17 +60,18 @@ public class ManageReservationsActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    reservationList = response.body();
-                    reservationAdapter = new ReservationAdapter(reservationList, ManageReservationsActivity.this);
-                    recyclerViewReservations.setAdapter(reservationAdapter);
+                    Log.d("RESERVATION_DEBUG", "Reservas recibidas: " + response.body().size());
+                    reservationList.clear();
+                    reservationList.addAll(response.body());
+                    reservationAdapter.notifyDataSetChanged();
                 } else {
-                    Toast.makeText(ManageReservationsActivity.this, "Error al obtener reservas", Toast.LENGTH_SHORT).show();
+                    Log.e("RESERVATION_DEBUG", "Error en la respuesta: " + response.errorBody());
                 }
             }
 
             @Override
             public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                Toast.makeText(ManageReservationsActivity.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(ManageReservationsActivity.this, "Error de conexión", Toast.LENGTH_SHORT).show();
             }
         });
     }

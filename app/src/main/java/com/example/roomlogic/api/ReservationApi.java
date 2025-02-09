@@ -10,6 +10,8 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
+import retrofit2.http.Query;
+
 public interface ReservationApi {
 
     @GET("/api/reservations")
@@ -23,4 +25,8 @@ public interface ReservationApi {
 
     @DELETE("/api/reservations/{id}")
     Call<Void> deleteReservation(@Path("id") int reservationId);
+
+    @GET("/api/reservations/today")
+    Call<List<Reservation>> getReservationsForToday();
+
 }

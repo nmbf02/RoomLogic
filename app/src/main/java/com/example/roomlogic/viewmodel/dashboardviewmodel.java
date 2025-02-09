@@ -3,27 +3,47 @@ package com.example.roomlogic.viewmodel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
-
+import com.example.roomlogic.api.ApiClient;
+import com.example.roomlogic.api.ReservationApi;
 import com.example.roomlogic.model.Reservation;
-
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class dashboardviewmodel extends ViewModel {
-    private final MutableLiveData<List<Reservation>> reservations = new MutableLiveData<>();
+    private MutableLiveData<List<Reservation>> reservationsLiveData = new MutableLiveData<>();
+    private ReservationApi reservationApi;
 
     public dashboardviewmodel() {
-        // Datos ficticios
-        List<Reservation> dummyReservations = new ArrayList<>();
-        dummyReservations.add(new Reservation("John Doe", "Suite", "123456789", 101));
-        dummyReservations.add(new Reservation("Jane Smith", "Deluxe", "987654321", 102));
-        dummyReservations.add(new Reservation("Alice Johnson", "Standard", "456123789", 103));
-        dummyReservations.add(new Reservation("Bob Brown", "Suite", "789321456", 104));
-
-        reservations.setValue(dummyReservations);
+        reservationApi = ApiClient.getRetrofitInstance().create(ReservationApi.class);
+        fetchReservationsForToday();
     }
 
-    public LiveData<List<Reservation>> getReservations() {
-        return reservations;
+    public LiveData<List<Reservation>> getReservationsForToday() {
+        return reservationsLiveData;
+    }
+
+    private void fetchReservationsForToday() {
+        String todayDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
+
+        reservationApi.getReservationsForToday().enqueue(new Callback<List<Reservation>>() {
+            @Override
+            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
+                if (response.isSuccessful() && response.body() != null) {
+                    reservationsLiveData.setValue(response.body());
+                } else {
+                    reservationsLiveData.setValue(null);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Reservation>> call, Throwable t) {
+                reservationsLiveData.setValue(null);
+            }
+        });
     }
 }
