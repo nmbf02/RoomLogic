@@ -18,6 +18,7 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import com.example.roomlogic.view.ReservationFormDialog;
 
 public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.ReservationViewHolder> {
     private List<Reservation> reservationList;
@@ -49,8 +50,11 @@ public class ReservationAdapter extends RecyclerView.Adapter<ReservationAdapter.
         holder.tvReservationStatus.setText("Status: " + reservation.getStatus());
 
         holder.btnEdit.setOnClickListener(v -> {
-            // Aquí puedes implementar la funcionalidad para editar la reserva
-            Toast.makeText(context, "Editar reserva ID: " + reservation.getId(), Toast.LENGTH_SHORT).show();
+            ReservationFormDialog dialog = new ReservationFormDialog(context, reservation, updatedReservation -> {
+                reservationList.set(position, updatedReservation);
+                notifyItemChanged(position);
+            });
+            dialog.show();
         });
 
         holder.btnDelete.setOnClickListener(v -> {

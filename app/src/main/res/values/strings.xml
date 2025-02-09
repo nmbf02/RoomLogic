@@ -4,4 +4,9 @@
     <string name="prompt_status">Estado</string>
     <string name="filter_type">Tipo de Habitación</string>
     <string name="filter_status">Estado</string>
+    <string-array name="reservation_status">
+        <item>Pending</item>
+        <item>Confirmed</item>
+        <item>Canceled</item>
+    </string-array>
 </resources>
