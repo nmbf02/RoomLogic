@@ -28,4 +28,8 @@ public class ApiClient {
     public static ClientApi getClientApi() {
         return getRetrofitInstance().create(ClientApi.class);
     }
+    // Método para obtener la API de Habitaciones
+    public static RoomApi getRoomApi() {
+        return getRetrofitInstance().create(RoomApi.class);
+    }
 }
