@@ -1,10 +1,15 @@
 package com.example.roomlogic.model;
 
+import com.google.gson.annotations.SerializedName;
+
 public class Client {
     private Integer id; // ID puede ser null
     private String name;
     private String email;
-    private String phone; // Cambiado de phone_number a phone
+
+    @SerializedName("phone_number") // Asegura compatibilidad con la API en Rust
+    private String phone;
+
     private String address;
     private String status;
 
@@ -44,10 +49,10 @@ public class Client {
     }
 
     public String getPhone() {
-        return phone; // Cambiado a phone
+        return phone; // Sigue usando "phone" en Android
     }
 
-    public void setPhone(String phone) { // Cambiado a phone
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 

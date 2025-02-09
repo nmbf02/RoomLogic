@@ -10,7 +10,7 @@
         android:id="@+id/tvRegisterTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="¿Qué desea registrar?"
+        android:text="Mantenimientos"
         android:textSize="20sp"
         android:textStyle="bold"
         android:gravity="center"

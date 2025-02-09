@@ -33,7 +33,7 @@
             android:id="@+id/btnRegister"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Registrar"
+            android:text="Mantenimiento"
             android:backgroundTint="@color/purple_200"
             android:textColor="@android:color/white"
             android:layout_margin="8dp" />
@@ -42,7 +42,7 @@
             android:id="@+id/btnReport"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Generar Reporte"
+            android:text="Reportes"
             android:backgroundTint="@color/purple_500"
             android:textColor="@android:color/white"
             android:layout_margin="8dp" />
