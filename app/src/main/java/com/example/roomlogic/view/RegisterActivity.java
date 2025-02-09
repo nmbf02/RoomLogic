@@ -14,7 +14,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         findViewById(R.id.btnRegisterClient).setOnClickListener(v -> {
             // Abrir la actividad para registrar un cliente
-            startActivity(new Intent(this, RegisterClientActivity.class));
+            startActivity(new Intent(this, ManageClientsActivity.class));
         });
 
         findViewById(R.id.btnRegisterRoom).setOnClickListener(v -> {

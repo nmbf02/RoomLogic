@@ -35,6 +35,7 @@
         <activity android:name=".view.RegisterClientActivity" />
         <activity android:name=".view.RegisterRoomActivity" />
         <activity android:name=".view.RegisterActivity" />
-
+        <activity android:name=".view.ManageClientsActivity"/>
+        <activity android:name=".view.ManageRoomsActivity"/>
     </application>
 </manifest>

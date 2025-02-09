@@ -16,6 +16,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+import android.util.Log;
+
 public class RegisterClientActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +56,10 @@ public class RegisterClientActivity extends AppCompatActivity {
                     } else {
                         try {
                             String errorBody = response.errorBody().string();
+                            Log.e("API_ERROR", "Error del servidor: " + errorBody); // Agrega este Log
                             Toast.makeText(RegisterClientActivity.this, "Error del servidor: " + errorBody, Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
+                            Log.e("API_ERROR", "Error desconocido", e);
                             Toast.makeText(RegisterClientActivity.this, "Error desconocido", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -63,9 +67,11 @@ public class RegisterClientActivity extends AppCompatActivity {
 
                 @Override
                 public void onFailure(Call<Void> call, Throwable t) {
+                    Log.e("API_ERROR", "Error: " + t.getMessage(), t); // Agrega este Log
                     Toast.makeText(RegisterClientActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
+
 
         });
     }
