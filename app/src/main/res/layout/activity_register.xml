@@ -30,5 +30,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Habitación"
+        android:textColor="@android:color/white"
+        android:layout_marginBottom="16dp" />
+
+<!--    TODO: Implementar RESERVATION-->
+    <Button
+        android:id="@+id/btnRegisterReservation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Reservación"
         android:textColor="@android:color/white" />
 </LinearLayout>
