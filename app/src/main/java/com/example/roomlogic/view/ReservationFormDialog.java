@@ -1,10 +1,12 @@
 package com.example.roomlogic.view;
 
+import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import com.example.roomlogic.model.Client;
 import com.example.roomlogic.model.Reservation;
 import com.example.roomlogic.model.Room;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,6 +30,7 @@ public class ReservationFormDialog extends Dialog {
     private ClientApi clientApi;
     private RoomApi roomApi;
     private Spinner spinnerClient, spinnerRoom, spinnerStatus;
+    private EditText etCheckInDate, etCheckOutDate;
     private List<Client> clientList = new ArrayList<>();
     private List<Room> roomList = new ArrayList<>();
     private Reservation reservation;
@@ -46,6 +50,8 @@ public class ReservationFormDialog extends Dialog {
         spinnerClient = findViewById(R.id.spinnerClient);
         spinnerRoom = findViewById(R.id.spinnerRoom);
         spinnerStatus = findViewById(R.id.spinnerStatus);
+        etCheckInDate = findViewById(R.id.etCheckInDate);
+        etCheckOutDate = findViewById(R.id.etCheckOutDate);
         Button btnSave = findViewById(R.id.btnSaveReservation);
         Button btnCancel = findViewById(R.id.btnCancelReservation);
 
@@ -64,10 +70,34 @@ public class ReservationFormDialog extends Dialog {
 
         if (reservation != null) {
             setSpinnerSelection(spinnerStatus, reservation.getStatus());
+            etCheckInDate.setText(reservation.getCheckInDate());
+            etCheckOutDate.setText(reservation.getCheckOutDate());
         }
+
+        // Abrir el DatePicker cuando se toca el campo de Check-in
+        etCheckInDate.setOnClickListener(v -> showDatePickerDialog(etCheckInDate));
+
+        // Abrir el DatePicker cuando se toca el campo de Check-out
+        etCheckOutDate.setOnClickListener(v -> showDatePickerDialog(etCheckOutDate));
 
         btnSave.setOnClickListener(v -> saveReservation());
         btnCancel.setOnClickListener(v -> dismiss());
+    }
+
+    private void showDatePickerDialog(EditText editText) {
+        final Calendar calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(),
+                (view, selectedYear, selectedMonth, selectedDay) -> {
+                    // Formatear la fecha seleccionada en YYYY-MM-DD
+                    String selectedDate = selectedYear + "-" + String.format("%02d", (selectedMonth + 1)) + "-" + String.format("%02d", selectedDay);
+                    editText.setText(selectedDate);
+                }, year, month, day);
+
+        datePickerDialog.show();
     }
 
     private void loadClients() {
@@ -141,10 +171,12 @@ public class ReservationFormDialog extends Dialog {
     private void saveReservation() {
         int selectedClientIndex = spinnerClient.getSelectedItemPosition();
         int selectedRoomIndex = spinnerRoom.getSelectedItemPosition();
+        String checkInDate = etCheckInDate.getText().toString().trim();
+        String checkOutDate = etCheckOutDate.getText().toString().trim();
         String status = spinnerStatus.getSelectedItem().toString();
 
-        if (selectedClientIndex < 0 || selectedRoomIndex < 0) {
-            Toast.makeText(getContext(), "Selecciona un cliente y una habitación", Toast.LENGTH_SHORT).show();
+        if (selectedClientIndex < 0 || selectedRoomIndex < 0 || checkInDate.isEmpty() || checkOutDate.isEmpty()) {
+            Toast.makeText(getContext(), "Selecciona todos los campos correctamente", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -152,45 +184,23 @@ public class ReservationFormDialog extends Dialog {
         int roomId = roomList.get(selectedRoomIndex).getId();
 
         Reservation updatedReservation = new Reservation(
-                reservation != null ? reservation.getId() : null, clientId, roomId, "2025-02-09", "2025-02-28", status);
+                reservation != null ? reservation.getId() : null, clientId, roomId, checkInDate, checkOutDate, status);
 
-        if (reservation == null) {
-            reservationApi.createReservation(updatedReservation).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Reserva creada correctamente", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                        onReservationUpdatedListener.onReservationUpdated(updatedReservation);
-                    } else {
-                        Toast.makeText(getContext(), "Error al crear la reserva", Toast.LENGTH_SHORT).show();
-                    }
+        reservationApi.createReservation(updatedReservation).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    Toast.makeText(getContext(), "Reserva creada correctamente", Toast.LENGTH_SHORT).show();
+                    dismiss();
+                    onReservationUpdatedListener.onReservationUpdated(updatedReservation);
                 }
+            }
 
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(getContext(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        } else {
-            reservationApi.updateReservation(updatedReservation.getId(), updatedReservation).enqueue(new Callback<Void>() {
-                @Override
-                public void onResponse(Call<Void> call, Response<Void> response) {
-                    if (response.isSuccessful()) {
-                        Toast.makeText(getContext(), "Reserva actualizada correctamente", Toast.LENGTH_SHORT).show();
-                        dismiss();
-                        onReservationUpdatedListener.onReservationUpdated(updatedReservation);
-                    } else {
-                        Toast.makeText(getContext(), "Error al actualizar la reserva", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<Void> call, Throwable t) {
-                    Toast.makeText(getContext(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
-        }
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(getContext(), "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public interface OnReservationUpdatedListener {
