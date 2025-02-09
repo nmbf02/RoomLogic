@@ -10,43 +10,56 @@
         android:id="@+id/etGuestId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID del Cliente"/>
+        android:hint="ID del Cliente"
+        android:inputType="number"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/etRoomId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID de la Habitación"/>
+        android:hint="ID de la Habitación"
+        android:inputType="number"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/etCheckInDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fecha de Check-in (YYYY-MM-DD)"/>
+        android:hint="Fecha de Check-in (YYYY-MM-DD)"
+        android:inputType="date"
+        android:padding="10dp"/>
 
     <EditText
         android:id="@+id/etCheckOutDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Fecha de Check-out (YYYY-MM-DD)"/>
+        android:hint="Fecha de Check-out (YYYY-MM-DD)"
+        android:inputType="date"
+        android:padding="10dp"/>
 
-    <EditText
-        android:id="@+id/etStatus"
+    <Spinner
+        android:id="@+id/spinnerStatus"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Estado (Pending, Confirmed, Canceled)"/>
+        android:layout_height="wrap_content"/>
 
     <Button
         android:id="@+id/btnSaveReservation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Guardar Reserva"
-        android:backgroundTint="@color/purple_500"/>
+        android:backgroundTint="@color/purple_500"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="10dp"
+        android:padding="12dp"/>
 
     <Button
         android:id="@+id/btnCancelReservation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cancelar"
-        android:backgroundTint="@color/gray"/>
+        android:backgroundTint="@color/gray"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="8dp"
+        android:padding="12dp"/>
 </LinearLayout>

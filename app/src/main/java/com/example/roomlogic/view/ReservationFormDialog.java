@@ -3,8 +3,10 @@ package com.example.roomlogic.view;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import com.example.roomlogic.R;
@@ -17,7 +19,8 @@ import retrofit2.Response;
 
 public class ReservationFormDialog extends Dialog {
     private ReservationApi reservationApi;
-    private EditText etGuestId, etRoomId, etCheckInDate, etCheckOutDate, etStatus;
+    private EditText etGuestId, etRoomId, etCheckInDate, etCheckOutDate;
+    private Spinner spinnerStatus;
     private Reservation reservation;
     private final OnReservationUpdatedListener onReservationUpdatedListener;
 
@@ -36,19 +39,33 @@ public class ReservationFormDialog extends Dialog {
         etRoomId = findViewById(R.id.etRoomId);
         etCheckInDate = findViewById(R.id.etCheckInDate);
         etCheckOutDate = findViewById(R.id.etCheckOutDate);
-        etStatus = findViewById(R.id.etStatus);
+        spinnerStatus = findViewById(R.id.spinnerStatus);
         Button btnSave = findViewById(R.id.btnSaveReservation);
         Button btnCancel = findViewById(R.id.btnCancelReservation);
 
         reservationApi = ApiClient.getRetrofitInstance().create(ReservationApi.class);
 
+        // Configurar Spinner con los estados de reserva
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                getContext(),
+                R.array.reservation_status, // Asegúrate de definir esto en strings.xml
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerStatus.setAdapter(adapter);
+
         // Si la reserva no es nueva, llenamos los campos con los datos actuales
         if (reservation != null) {
             etGuestId.setText(String.valueOf(reservation.getGuestId()));
             etRoomId.setText(String.valueOf(reservation.getRoomId()));
-            etCheckInDate.setText(reservation.getCheckInDate());
-            etCheckOutDate.setText(reservation.getCheckOutDate());
-            etStatus.setText(reservation.getStatus());
+            etCheckInDate.setText(reservation.getCheckInDate() != null ? reservation.getCheckInDate() : "");
+            etCheckOutDate.setText(reservation.getCheckOutDate() != null ? reservation.getCheckOutDate() : "");
+
+            // Seleccionar el estado actual en el Spinner
+            if (reservation.getStatus() != null) {
+                int position = adapter.getPosition(reservation.getStatus());
+                spinnerStatus.setSelection(position);
+            }
         }
 
         // Guardar reserva (crear o actualizar)
@@ -57,7 +74,7 @@ public class ReservationFormDialog extends Dialog {
             String roomIdStr = etRoomId.getText().toString().trim();
             String checkInDate = etCheckInDate.getText().toString().trim();
             String checkOutDate = etCheckOutDate.getText().toString().trim();
-            String status = etStatus.getText().toString().trim();
+            String status = spinnerStatus.getSelectedItem().toString(); // Obtener estado seleccionado
 
             if (guestIdStr.isEmpty() || roomIdStr.isEmpty() || checkInDate.isEmpty() || checkOutDate.isEmpty() || status.isEmpty()) {
                 Toast.makeText(getContext(), "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show();
@@ -67,7 +84,10 @@ public class ReservationFormDialog extends Dialog {
             int guestId = Integer.parseInt(guestIdStr);
             int roomId = Integer.parseInt(roomIdStr);
 
-            Reservation updatedReservation = new Reservation(reservation != null ? reservation.getId() : null, guestId, roomId, checkInDate, checkOutDate, status);
+            Reservation updatedReservation = new Reservation(
+                    reservation != null ? reservation.getId() : null,
+                    guestId, roomId, checkInDate, checkOutDate, status
+            );
 
             if (reservation == null) {
                 // Crear una nueva reserva
@@ -116,5 +136,4 @@ public class ReservationFormDialog extends Dialog {
     public interface OnReservationUpdatedListener {
         void onReservationUpdated(Reservation updatedReservation);
     }
-
 }
