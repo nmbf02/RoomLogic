@@ -40,7 +40,7 @@ public class ReservationFormDialog extends Dialog {
         Button btnSave = findViewById(R.id.btnSaveReservation);
         Button btnCancel = findViewById(R.id.btnCancelReservation);
 
-        reservationApi = ApiClient.getReservationApi();
+        reservationApi = ApiClient.getRetrofitInstance().create(ReservationApi.class);
 
         // Si la reserva no es nueva, llenamos los campos con los datos actuales
         if (reservation != null) {
@@ -116,4 +116,5 @@ public class ReservationFormDialog extends Dialog {
     public interface OnReservationUpdatedListener {
         void onReservationUpdated(Reservation updatedReservation);
     }
+
 }
