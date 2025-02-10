@@ -6,21 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import com.example.roomlogic.R;
 import com.example.roomlogic.adapter.ReservationAdapter;
-import com.example.roomlogic.api.ApiClient;
-import com.example.roomlogic.api.ReservationApi;
 import com.example.roomlogic.model.Reservation;
-import java.text.SimpleDateFormat;
+import com.example.roomlogic.viewmodel.dashboardviewmodel;
+
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 import android.graphics.pdf.PdfDocument;
 import android.graphics.Paint;
@@ -35,7 +30,7 @@ import androidx.core.content.ContextCompat;
 
 public class dashboardactivity extends AppCompatActivity {
     private ReservationAdapter adapter;
-    private ReservationApi reservationApi;
+    private dashboardviewmodel viewModel;
     private static final int STORAGE_PERMISSION_CODE = 100;
 
     @Override
@@ -47,88 +42,54 @@ public class dashboardactivity extends AppCompatActivity {
         RecyclerView rvReservations = findViewById(R.id.rvReservations);
         rvReservations.setLayoutManager(new LinearLayoutManager(this));
 
-        // ✅ Inicializar adaptador con una lista vacía y el contexto
+        // Inicializar adaptador con lista vacía
         adapter = new ReservationAdapter(new ArrayList<>(), this);
         rvReservations.setAdapter(adapter);
 
-        // Instanciar API
-        reservationApi = ApiClient.getRetrofitInstance().create(ReservationApi.class);
+        // Inicializar ViewModel
+        viewModel = new ViewModelProvider(this).get(dashboardviewmodel.class);
 
-        // Cargar reservas del día actual
-        loadReservationsForToday();
+        // Observar los cambios en las reservas del día
+        viewModel.getReservationsForToday().observe(this, reservations -> {
+            if (reservations != null && !reservations.isEmpty()) {
+                adapter.updateReservations(reservations);
+                Log.d("DASHBOARD_UI", "Mostrando " + reservations.size() + " reservas.");
+            } else {
+                Toast.makeText(this, "No hay reservas para hoy", Toast.LENGTH_SHORT).show();
+                Log.w("DASHBOARD_UI", "No hay reservas disponibles para mostrar.");
+            }
+        });
 
-        // Configurar el botón de imágenes
+        // Configurar botones
         findViewById(R.id.btnImages).setOnClickListener(v -> {
             startActivity(new Intent(this, ImagesActivity.class));
         });
 
-        // Configurar el botón "Registrar"
         findViewById(R.id.btnRegister).setOnClickListener(v -> {
             startActivity(new Intent(this, RegisterActivity.class));
         });
 
-        // Configurar el botón "Reportes"
         findViewById(R.id.btnReport).setOnClickListener(v -> {
             if (checkStoragePermission()) {
-                generateReportPdf(); // Si el permiso ya está concedido, generar el PDF
+                generateReportPdf();
             } else {
-                requestStoragePermission(); // Si no, solicitar permisos
+                requestStoragePermission();
             }
         });
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        // ✅ Forzar la actualización de reservas cuando el usuario regresa a esta pantalla
-        loadReservationsForToday();
-    }
-
-    // ✅ Método para cargar reservas del día actual
-    private void loadReservationsForToday() {
-        // ✅ Obtener la fecha actual en formato YYYY-MM-DD
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
-        String todayDate = sdf.format(new Date());
-
-        Log.d("DASHBOARD_DEBUG", "Cargando reservas para la fecha: " + todayDate);
-
-        reservationApi.getReservationsForToday().enqueue(new Callback<List<Reservation>>() {
-            @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    List<Reservation> reservations = response.body();
-                    Log.d("DASHBOARD_DEBUG", "Reservas recibidas: " + reservations.size());
-
-                    adapter.updateReservations(reservations);
-                } else {
-                    Log.w("DASHBOARD_WARNING", "No hay reservas para hoy");
-                    Toast.makeText(dashboardactivity.this, "No hay reservas para hoy", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                Log.e("DASHBOARD_ERROR", "Error al obtener reservas: " + t.getMessage());
-                Toast.makeText(dashboardactivity.this, "Error al obtener reservas", Toast.LENGTH_SHORT).show();
-            }
-        });
+        viewModel.getReservationsForToday();
     }
 
     private void generateReportPdf() {
-        reservationApi.getReservations().enqueue(new Callback<List<Reservation>>() {
-            @Override
-            public void onResponse(Call<List<Reservation>> call, Response<List<Reservation>> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    createPdf(response.body());
-                } else {
-                    Toast.makeText(dashboardactivity.this, "No hay reservas para generar el reporte", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                Toast.makeText(dashboardactivity.this, "Error al obtener datos para el reporte", Toast.LENGTH_SHORT).show();
+        viewModel.getReservationsForToday().observe(this, reservations -> {
+            if (reservations != null && !reservations.isEmpty()) {
+                createPdf(reservations);
+            } else {
+                Toast.makeText(dashboardactivity.this, "No hay reservas para generar el reporte", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -163,8 +124,7 @@ public class dashboardactivity extends AppCompatActivity {
 
         pdfDocument.finishPage(page);
 
-        // **Generar nombre del archivo con la fecha y hora actual**
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(new Date());
+        String timeStamp = new java.text.SimpleDateFormat("yyyyMMdd_HHmmss", java.util.Locale.getDefault()).format(new java.util.Date());
         String fileName = "Reporte_Reservas_" + timeStamp + ".pdf";
 
         File directory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
