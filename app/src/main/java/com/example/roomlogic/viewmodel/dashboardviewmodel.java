@@ -20,7 +20,7 @@ public class dashboardviewmodel extends ViewModel {
     private ReservationApi reservationApi;
 
     public dashboardviewmodel() {
-        reservationApi = ApiClient.getRetrofitInstance().create(ReservationApi.class);
+        reservationApi = ApiClient.getReservationApi();
         fetchReservationsForToday();
     }
 
@@ -43,9 +43,8 @@ public class dashboardviewmodel extends ViewModel {
     /**
      * Método que realiza la petición a la API para obtener las reservas del día actual.
      */
-    private void fetchReservationsForToday() {
-        String todayDate = getTodayDate();
-        Log.d("VIEWMODEL_DEBUG", "Obteniendo reservas para la fecha: " + todayDate);
+    public void fetchReservationsForToday() {
+        Log.d("VIEWMODEL_DEBUG", "Obteniendo reservas del día...");
 
         reservationApi.getReservationsForToday().enqueue(new Callback<List<Reservation>>() {
             @Override
@@ -54,15 +53,15 @@ public class dashboardviewmodel extends ViewModel {
                     reservationsLiveData.setValue(response.body());
                     Log.d("VIEWMODEL_DEBUG", "Reservas recibidas: " + response.body().size());
                 } else {
-                    Log.w("VIEWMODEL_WARNING", "No hay reservas disponibles para hoy");
                     reservationsLiveData.setValue(null);
+                    Log.w("VIEWMODEL_WARNING", "No hay reservas disponibles para hoy");
                 }
             }
 
             @Override
             public void onFailure(Call<List<Reservation>> call, Throwable t) {
-                Log.e("VIEWMODEL_ERROR", "Error al obtener reservas: " + t.getMessage());
                 reservationsLiveData.setValue(null);
+                Log.e("VIEWMODEL_ERROR", "Error al obtener reservas: " + t.getMessage());
             }
         });
     }

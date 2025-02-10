@@ -3,19 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
-    android:gravity="center">
+    android:padding="20dp"
+    android:background="@android:color/white">
 
+    <!-- Campo de búsqueda de imágenes -->
+    <EditText
+        android:id="@+id/etSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Buscar imagen..."
+        android:padding="12dp"
+        android:background="@android:color/darker_gray"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        android:layout_marginBottom="10dp"/>
+
+    <!-- Botón para buscar imágenes -->
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Buscar Imagen"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@android:color/holo_purple"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:elevation="4dp"/>
+
+    <!-- Botón para subir imágenes -->
     <Button
         android:id="@+id/btnUploadImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Subir Imágenes"
-        android:layout_marginBottom="16dp" />
+        android:text="Subir Imagen"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@android:color/holo_green_dark"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:elevation="4dp"/>
 
+    <!-- Botón para descargar imágenes -->
     <Button
         android:id="@+id/btnDownloadImages"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Bajar Imágenes" />
+        android:text="Descargar Imagen"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="@android:color/holo_blue_dark"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:elevation="4dp"/>
+
+    <!-- Imagen obtenida de la búsqueda o cargada -->
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:background="@android:color/darker_gray"/>
+
 </LinearLayout>

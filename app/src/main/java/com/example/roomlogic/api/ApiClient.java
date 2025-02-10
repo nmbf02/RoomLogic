@@ -6,6 +6,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiClient {
     // URL base de la API
     private static final String BASE_URL = "http://10.0.2.2:8080"; // Para emulador, cambia si usas un dispositivo físico
+    private static final String UNSPLASH_BASE_URL = "https://api.unsplash.com/";
     private static Retrofit retrofit;
 
     // Método para obtener la instancia de Retrofit
@@ -37,4 +38,22 @@ public class ApiClient {
     public static ReservationApi getReservationApi() {
         return getRetrofitInstance().create(ReservationApi.class);
     }
+
+    public static Retrofit getUnsplashClient() {
+        if (retrofit == null) {
+            retrofit = new Retrofit.Builder()
+                    .baseUrl(UNSPLASH_BASE_URL)
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build();
+        }
+        return retrofit;
+    }
+
+    public static Retrofit getImgBBClient() {
+        return new Retrofit.Builder()
+                .baseUrl("https://api.imgbb.com/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+    }
+
 }
