@@ -1,6 +1,8 @@
 package com.example.roomlogic.viewmodel;
 
 import android.net.Uri;
+import android.util.Log;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -36,20 +38,37 @@ public class ImageViewModel extends ViewModel {
     }
 
     public void searchImages(String query) {
+        String url = "https://api.unsplash.com/search/photos?query=" + query + "&client_id=" + ApiKeys.UNSPLASH_API_KEY + "&per_page=10";
+        Log.d("ImageViewModel", "URL generada para Unsplash: " + url);
+
         unsplashApi.searchImages(query, ApiKeys.UNSPLASH_API_KEY, 10).enqueue(new Callback<UnsplashResponse>() {
             @Override
             public void onResponse(Call<UnsplashResponse> call, Response<UnsplashResponse> response) {
                 if (response.isSuccessful() && response.body() != null) {
-                    imagesLiveData.setValue(response.body().getResults());
+                    List<UnsplashResponse.UnsplashImage> results = response.body().getResults();
+                    Log.d("ImageViewModel", "Imágenes obtenidas: " + results.size());
+
+                    if (!results.isEmpty()) {
+                        imagesLiveData.setValue(results);
+                    } else {
+                        Log.e("ImageViewModel", "No se encontraron imágenes en la API.");
+                        imagesLiveData.setValue(null);
+                    }
+                } else {
+                    Log.e("ImageViewModel", "Error en la API: " + response.code() + " - " + response.message());
+                    imagesLiveData.setValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<UnsplashResponse> call, Throwable t) {
+                Log.e("ImageViewModel", "Fallo en la llamada a la API: " + t.getMessage());
                 imagesLiveData.setValue(null);
             }
         });
     }
+
+
 
     // ✅ Subir imágenes a ImgBB
     public LiveData<String> getUploadedImageUrl() {
