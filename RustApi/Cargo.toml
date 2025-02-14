@@ -1,5 +1,5 @@
 [package]
-name = "rust_api_login"
+name = "RustApi"
 version = "0.1.0"
 edition = "2021"
 
