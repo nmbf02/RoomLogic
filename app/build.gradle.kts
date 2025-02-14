@@ -1,5 +1,8 @@
 plugins {
-    alias(libs.plugins.android.application)
+    //    alias(libs.plugins.android.application)
+    id("com.android.application")
+    // Add the Google services Gradle plugin
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -58,4 +61,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime:2.5.1")
     implementation("androidx.recyclerview:recyclerview:1.2.1")
 
+    implementation(platform("com.google.firebase:firebase-bom:33.9.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-messaging:23.1.2")
 }

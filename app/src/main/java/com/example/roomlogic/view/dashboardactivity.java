@@ -2,6 +2,7 @@ package com.example.roomlogic.view;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
@@ -27,6 +28,9 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.annotation.NonNull;
+
+import com.example.roomlogic.firebase.FirebaseUtils;
 
 public class dashboardactivity extends AppCompatActivity {
     private ReservationAdapter adapter;
@@ -76,6 +80,12 @@ public class dashboardactivity extends AppCompatActivity {
                 requestStoragePermission();
             }
         });
+
+        // Solicitar permiso
+        requestNotificationPermission();
+
+        // Obtener el Token de Firebase
+        FirebaseUtils.obtenerTokenFCM();
     }
 
     @Override
@@ -165,15 +175,33 @@ public class dashboardactivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                generateReportPdf();
-            } else {
-                Toast.makeText(this, "Permiso denegado. No se puede generar el reporte.", Toast.LENGTH_SHORT).show();
+    // Solicitar perimiso
+    private void requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
+                        NOTIFICATION_PERMISSION_CODE);
             }
         }
     }
+
+    // Notificacion de permiso
+    private static final int NOTIFICATION_PERMISSION_CODE = 101;
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Log.d("NOTIFICACIONES", "Permiso de notificación concedido.");
+                Toast.makeText(this, "Permiso de notificación concedido", Toast.LENGTH_SHORT).show();
+            } else {
+                Log.e("NOTIFICACIONES", "Permiso de notificación denegado.");
+                Toast.makeText(this, "Debes conceder permisos para recibir notificaciones", Toast.LENGTH_LONG).show();
+            }
+        }
+    }
+
 }

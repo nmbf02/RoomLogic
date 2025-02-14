@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "279533263044",
+    "project_id": "roomlogic-edba1",
+    "storage_bucket": "roomlogic-edba1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:279533263044:android:d5355db880cd6cf136d191",
+        "android_client_info": {
+          "package_name": "com.example.roomlogic"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHjyY_O687Qwd_2wHCv6URZHcKttoOooQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
