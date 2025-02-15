@@ -178,13 +178,11 @@ public class dashboardactivity extends AppCompatActivity {
     // Solicitar perimiso
     private void requestNotificationPermission() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
-                    != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.POST_NOTIFICATIONS},
-                        NOTIFICATION_PERMISSION_CODE);
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 101);
             }
         }
+
     }
 
     // Notificacion de permiso
@@ -193,15 +191,12 @@ public class dashboardactivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == NOTIFICATION_PERMISSION_CODE) {
+        if (requestCode == 101) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                Log.d("NOTIFICACIONES", "Permiso de notificación concedido.");
-                Toast.makeText(this, "Permiso de notificación concedido", Toast.LENGTH_SHORT).show();
+                Log.d("NOTIFICACIONES", "Permiso concedido.");
             } else {
                 Log.e("NOTIFICACIONES", "Permiso de notificación denegado.");
-                Toast.makeText(this, "Debes conceder permisos para recibir notificaciones", Toast.LENGTH_LONG).show();
             }
         }
     }
-
 }

@@ -29,7 +29,7 @@ async fn send_push_notification(device_token: &str) -> Result<(), reqwest::Error
 
     let payload = json!({
         "to": device_token,
-        "notification": {
+        "data": {
             "title": "Tarea Completada",
             "body": "Tu tarea ha finalizado exitosamente."
         }
