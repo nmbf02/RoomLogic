@@ -2,13 +2,12 @@
 
 ## 🌐 Descripción
 
-**RoomLogic** es una aplicación de gestión hotelera desarrollada en **Android Java**, utilizando la arquitectura **MVVM** y procesos en **paralelo** para optimizar el rendimiento en dispositivos Android. Esta aplicación se conecta a una **API-REST** desarrollada en **Rust** para manejar la sincronización de datos entre el cliente y el servidor, permitiendo consultas en tiempo real y almacenamiento tanto online como offline.
+RoomLogic es una aplicación de gestión hotelera desarrollada en Android Java, utilizando la arquitectura MVVM y procesos en paralelo para optimizar el rendimiento en dispositivos Android. Esta aplicación se conecta a una API-REST desarrollada en Rust con  ActixWeb, permitiendo consultas en tiempo real, sincronización online y offline, y el uso de notificaciones push mediante Firebase Cloud Messaging (FCM). Además, la API ha sido dockerizada y desplegada en Digital Ocean, garantizando escalabilidad y balanceo de carga.
 
-El sistema gestiona clientes, habitaciones y reservas de hotel, además de generar reportes en **PDF** y utilizar **hilos** para la carga y búsqueda de imágenes en la web, asegurando una experiencia fluida para el usuario.
-
-## 🔄 Procesos Implementados
+## 🛠️ Procesos Implementados
 
 ### 👨‍🏫 Registro y Consulta:
+
 - Login de usuarios
 - Registrar Clientes
 - Registrar Habitaciones
@@ -17,19 +16,36 @@ El sistema gestiona clientes, habitaciones y reservas de hotel, además de gener
 - Consultar Habitaciones
 - Consultar Reservas
 - Consulta de clientes con reservas en el día actual
-- Generación de reportes en **PDF**
-- **Proceso con hilos**: Carga y búsqueda de imágenes en la web
+- Generación de reportes en PDF
+- Proceso con hilos: Carga y búsqueda de imágenes en la web
 
-## 🛠 Tecnologías Utilizadas
+### 🛠️ API Backend en ActixWeb (Rust):
 
-- **Lenguaje:** Android Java
+- Procesamiento de tareas en paralelo
+- Endpoint para solicitud de tareas
+- Envio de notificaciones push cuando la tarea se completa
+- API dockerizada y desplegada en Digital Ocean
+- Balanceo de carga y escalabilidad
+
+### 📢 Notificaciones Push:
+
+- Integración con Firebase Cloud Messaging (FCM)
+- Notificaciones enviadas desde la API cuando una tarea se completa
+- Manejo de notificaciones en la aplicación Android
+
+## 💪 Tecnologías Utilizadas
+
+- **Lenguaje:** Android Java, Rust
 - **Arquitectura:** MVVM (Model-View-ViewModel)
 - **Base de Datos:** PhpMyAdmin
-- **Backend:** API-REST desarrollada en **Rust**
+- **Backend:** API-REST desarrollada en Rust (ActixWeb)
 - **Sincronización:** Online y offline
 - **Procesamiento:** Hilos y procesos en paralelo para mejor rendimiento en Android
+- **Notificaciones Push:** Firebase Cloud Messaging (FCM)
+- **Docker:** Contenerización del backend
+- **Despliegue en la nube:** Digital Ocean
 
-## 📚 Script de Base de Datos
+## 📃 Script de Base de Datos
 
 ```sql
 -- Crear la base de datos
@@ -77,13 +93,25 @@ CREATE TABLE IF NOT EXISTS Reservations (
 );
 ```
 
-## 💼 Autor
+## 🌟 Implementación de la API en ActixWeb
+
+La API en Rust se encarga de manejar tareas en paralelo, enviar notificaciones push a la aplicación móvil y sincronizar datos con la base de datos.
+
+### 🛠️ Endpoints de la API:
+
+- `POST /execute_task` - Ejecuta una tarea en segundo plano y envía una notificación push al finalizar.
+- `GET /health_check` - Verifica si la API está funcionando correctamente.
+
+### 🏡 Despliegue en Digital Ocean
+
+- **Dockerizado**: La API ha sido contenerizada usando Docker.
+- **Escalabilidad**: Se implementó balanceo de carga para manejar múltiples solicitudes concurrentes.
+- **Configuración de variables de entorno**: Se almacenó la clave de FCM en el `.env` dentro del contenedor.
+
+## 🌟 Autor
 
 Este sistema ha sido desarrollado por:
 
-- **Nathaly Berroa** - *Desarrolladora Principal* - [GitHub](https://github.com/nmbf02)
+**Nathaly Berroa** - Desarrolladora Principal - [GitHub](https://github.com/nmbf02)
 
----
-
-Si deseas contribuir o reportar errores, por favor abre un issue en el repositorio.
-🚀✨
+Si deseas contribuir o reportar errores, por favor abre un issue en el repositorio. 🚀✨
