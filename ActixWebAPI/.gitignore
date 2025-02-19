@@ -1,1 +1,2 @@
-echo "ActixWebAPI/.env" >> .gitignore
+ActixWebAPI/*.json
+ActixWebAPI/.env
