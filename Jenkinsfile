@@ -29,7 +29,7 @@ pipeline {
         stage('Push to Nexus') {
             steps {
                 script {
-                    sh "docker login ${REGISTRY} -u admin -p admin123"
+                    sh "docker login ${REGISTRY} -u admin -p Nmbf021101"
                     sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
                 }
             }
