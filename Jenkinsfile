@@ -7,7 +7,7 @@ pipeline {
         SSH_CREDENTIALS_ID = 'jenkins-ssh-key'
         REGISTRY = 'localhost:8082'
         IMAGE_NAME = 'roomlogic-api'
-        SERVER_IP = 'TU_IP_DEL_SERVIDOR'
+        SERVER_IP = '45.55.43.15'
         SSH_USER = 'root'
     }
 
