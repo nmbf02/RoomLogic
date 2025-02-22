@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         GIT_CREDENTIALS_ID = 'github-credentials'
+        NEXUS_CREDENTIALS_ID = 'nexus-credentials'
         SSH_CREDENTIALS_ID = 'jenkins-ssh-key'
         REGISTRY = 'localhost:8082'
         IMAGE_NAME = 'roomlogic-api'
@@ -20,15 +21,12 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -f Dockerfile ."
+                    sh "docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -f ActixWebAPI/Dockerfile ActixWebAPI/"
                 }
             }
         }
 
         stage('Push to Nexus') {
-            when {
-                expression { return false }  // 🔹 Desactivado hasta que configures Nexus correctamente
-            }
             steps {
                 script {
                     sh "docker login ${REGISTRY} -u admin -p admin123"
@@ -40,14 +38,7 @@ pipeline {
         stage('Deploy to Server') {
             steps {
                 sshagent([env.SSH_CREDENTIALS_ID]) {
-                    sh """
-                        ssh ${SSH_USER}@${SERVER_IP} '
-                        docker pull ${REGISTRY}/${IMAGE_NAME}:latest &&
-                        docker stop ${IMAGE_NAME} || true &&
-                        docker rm ${IMAGE_NAME} || true &&
-                        docker run -d -p 8082:8082 --name ${IMAGE_NAME} ${REGISTRY}/${IMAGE_NAME}:latest
-                        '
-                    """
+                    sh "ssh ${SSH_USER}@${SERVER_IP} 'docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker-compose up -d'"
                 }
             }
         }
