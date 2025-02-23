@@ -38,17 +38,13 @@ pipeline {
 
         stage('Deploy to Server') {
             steps {
-                script {
-                    withCredentials([sshUserPrivateKey(credentialsId: 'jenkins-ssh-key', keyFileVariable: 'SSH_KEY')]) {
-                        sh '''
-                        ssh -i $SSH_KEY root@45.55.43.15 <<EOF
-                        docker pull localhost:8082/repository/docker-repo/roomlogic-api:latest
-                        docker-compose up -d
-                        EOF
-                        '''
-                    }
+                sshagent(['jenkins-ssh-key']) {  // Reemplaza con el ID correcto en Jenkins
+                    sh "ssh -o StrictHostKeyChecking=no root@45.55.43.15 'docker pull localhost:8082/roomlogic-api:latest && docker-compose up -d'"
                 }
             }
         }
     }
 }
+
+
+
