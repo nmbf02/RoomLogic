@@ -37,8 +37,8 @@ pipeline {
 
         stage('Deploy to Server') {
             steps {
-                withCredentials([sshUserPrivateKey(credentialsId: env.SSH_CREDENTIALS_ID, keyFileVariable: 'SSH_KEY')]) {
-                    sh '''ssh -i "$SSH_KEY" ${SSH_USER}@${SERVER_IP} 'docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker-compose up -d' '''
+                sshagent(['SSH_CREDENTIALS_ID']) {
+                    sh "ssh -i ~/.ssh/id_rsa root@45.55.43.15 'docker pull ${REGISTRY}/${IMAGE_NAME}:latest && docker-compose up -d'"
                 }
             }
         }
