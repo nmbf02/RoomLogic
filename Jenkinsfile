@@ -21,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t roomlogic-api:latest -f ActixWebAPI/Dockerfile ."
+                    sh "docker build -t roomlogic-api:latest -f ActixWebAPI/Dockerfile ActixWebAPI/"
                 }
             }
         }
