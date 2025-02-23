@@ -21,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -f ActixWebAPI/Dockerfile ActixWebAPI"
+                    sh "docker build -t roomlogic-api:latest -f ActixWebAPI/Dockerfile ."
                 }
             }
         }
@@ -29,9 +29,9 @@ pipeline {
         stage('Push to Nexus') {
             steps {
                 script {
-                    sh "docker login ${REGISTRY} -u admin -p Nmbf021101"
-                    sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:latest"
-                    sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
+                    sh "docker login localhost:8082/repository/docker-repo -u admin -p Nmbf021101"
+                    sh "docker tag roomlogic-api:latest localhost:8082/repository/docker-repo/roomlogic-api:latest"
+                    sh "docker push localhost:8082/repository/docker-repo/roomlogic-api:latest"
                 }
             }
         }
