@@ -21,7 +21,7 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    sh "docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -f ActixWebAPI/Dockerfile ." 
+                    sh "docker build -t ${REGISTRY}/${IMAGE_NAME}:latest -f ActixWebAPI/Dockerfile ActixWebAPI"
                 }
             }
         }
