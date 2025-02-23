@@ -5,7 +5,7 @@ pipeline {
         GIT_CREDENTIALS_ID = 'github-credentials'
         NEXUS_CREDENTIALS_ID = 'nexus-credentials'
         SSH_CREDENTIALS_ID = 'jenkins-ssh-key'
-        REGISTRY = 'localhost:8082'  
+        REGISTRY = 'localhost:8082/repository/docker-repo'
         IMAGE_NAME = 'roomlogic-api'
         SERVER_IP = '45.55.43.15'   
         SSH_USER = 'root'
@@ -30,6 +30,7 @@ pipeline {
             steps {
                 script {
                     sh "docker login ${REGISTRY} -u admin -p Nmbf021101"
+                    sh "docker tag ${IMAGE_NAME}:latest ${REGISTRY}/${IMAGE_NAME}:latest"
                     sh "docker push ${REGISTRY}/${IMAGE_NAME}:latest"
                 }
             }
